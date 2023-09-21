@@ -5,9 +5,11 @@ import cv2
 #     return sp.Popen(['ffplay', '-listen', '1', '-i', rtmp_url])
 
 # This is the XML location + file containing the pre-trained classifier for detecting frontal faces in images
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-body_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fullbody.xml')
+# face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+# body_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fullbody.xml')
 
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+body_cascade = cv2.CascadeClassifier('haarcascade_fullbody.xml')
 
 def start_ffmpeg(rtmp_url, width, height, fps):
     command = [
@@ -37,7 +39,7 @@ def face_detection(frame):
     return cv2.flip(frame, 1)
 
 def main():
-    rtmp_url = "rtmp://192.168.1.6:1935/live/test"  # TODO Dynamic URL, Stream keys...
+    rtmp_url = "rtmp://103.165.142.44:7905/live/test"  # TODO Dynamic URL, Stream keys...
     cap = cv2.VideoCapture(0)
 
     # Get video information
