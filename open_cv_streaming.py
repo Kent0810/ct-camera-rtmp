@@ -37,7 +37,7 @@ def face_detection(frame):
     return cv2.flip(frame, 1)
 
 def main():
-    rtmp_url = "rtmp://103.165.142.44:7905/live/test"  # TODO Dynamic URL, Stream keys...
+    rtmp_url = "rtmp://103.165.142.44:7957/camera/kent-test"  # TODO Dynamic URL, Stream keys...
     cap = cv2.VideoCapture(0)
 
     # Get video information
