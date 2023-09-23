@@ -5,8 +5,7 @@ import cv2
 #     return sp.Popen(['ffplay', '-listen', '1', '-i', rtmp_url])
 
 # This is the XML location + file containing the pre-trained classifier for detecting frontal faces in images
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-body_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fullbody.xml')
+face_cascade = cv2.CascadeClassifier('./pretrainned-model/haarcascade_frontalface_default.xml')
 
 
 def start_ffmpeg(rtmp_url, width, height, fps):
