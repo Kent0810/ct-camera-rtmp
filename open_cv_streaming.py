@@ -24,6 +24,7 @@ def start_ffmpeg(rtmp_url, width, height, fps):
         '-preset', 'fast',
         '-bufsize', '256M',
         '-f', 'flv',
+        '-b', '4000000',
         rtmp_url
     ]
     return sp.Popen(command, stdin=sp.PIPE)
