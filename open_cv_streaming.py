@@ -13,18 +13,16 @@ def start_ffmpeg(rtmp_url, width, height, fps):
         'ffmpeg',
         '-y',
         '-re',
-        '-f', 'rawvideo',
-        '-vcodec', 'rawvideo',
-        '-pix_fmt', 'bgr24',
+        '-f', 'mjpeg',
+        '-vcodec', 'mjpeg',
         '-s', "{}x{}".format(width, height),
         '-r', str(fps),
-        '-i', '-',
+        '-i', '/dev/video0',
         '-c:v', 'libx264',
         '-pix_fmt', 'yuv420p',
         '-preset', 'fast',
         '-bufsize', '256M',
         '-f', 'flv',
-        '-b', '4000000',
         rtmp_url
     ]
     return sp.Popen(command, stdin=sp.PIPE)
@@ -39,11 +37,14 @@ def face_detection(frame):
 def main():
     rtmp_url = "rtmp://103.165.142.44:7957/camera/kent-test"  # TODO Dynamic URL, Stream keys...
     cap = cv2.VideoCapture(0)
-
+    cap.set(cv2.CAP_PROP_FPS, 60)
+    
     # Get video information
     fps = int(cap.get(cv2.CAP_PROP_FPS))
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    
+    print(width, height, fps)
 
     # ffplay_process = start_ffplay(rtmp_url)
     ffmpeg_process = start_ffmpeg(rtmp_url, width, height, fps)
