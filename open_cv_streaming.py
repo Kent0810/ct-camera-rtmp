@@ -9,22 +9,19 @@ face_cascade = cv2.CascadeClassifier('./pretrainned-model/haarcascade_frontalfac
 
 
 def start_ffmpeg(rtmp_url, width, height, fps):
-    command = [
-        'ffmpeg',
-        '-s', "640x480",
-        '-y',
-        '-re',
-        '-f', 'rawvideo',
-        '-vcodec', 'rawvideo',
-        '-pix_fmt', 'bgr24',
-        '-r', str(fps),
-        '-i', '-',
-        '-c:v', 'libx264',
-        '-pix_fmt', 'yuv420p',
-        '-preset', 'fast',
-        '-bufsize', '256M',
-        '-f', 'flv',
-        rtmp_url
+   command = [
+      'ffmpeg',
+      '-s', '1280x720',
+      '-y',
+      '-f', 'rawvideo',
+      '-pix_fmt', 'bgr24',
+      '-r', str(fps),
+      '-i', '-',
+      '-vf', 'format=yuv420p',
+      '-c:v', 'h264_v4l2m2m',
+      '-b:v', '1M',
+      '-f', 'flv',
+      rtmp_url
     ]
     return sp.Popen(command, stdin=sp.PIPE)
 
@@ -38,7 +35,6 @@ def face_detection(frame):
 def main():
     rtmp_url = "rtmp://103.165.142.44:7957/camera/kent-test"  # TODO Dynamic URL, Stream keys...
     cap = cv2.VideoCapture(0)
-    cap.set(cv2.CAP_PROP_FPS, 60)
     
     # Get video information
     fps = int(cap.get(cv2.CAP_PROP_FPS))
