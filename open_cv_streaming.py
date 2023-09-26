@@ -10,20 +10,19 @@ face_cascade = cv2.CascadeClassifier('./pretrainned-model/haarcascade_frontalfac
 
 def start_ffmpeg(rtmp_url, width, height, fps):
     command = [
-        'ffmpeg',
-        '-y',
-        '-re',
-        '-f', 'mjpeg',
-        '-vcodec', 'mjpeg',
-        '-s', "{}x{}".format(width, height),
-        '-r', str(fps),
-        '-i', '/dev/video0',
-        '-c:v', 'libx264',
-        '-pix_fmt', 'yuv420p',
-        '-preset', 'fast',
-        '-bufsize', '256M',
-        '-f', 'flv',
-        rtmp_url
+      'ffmpeg',
+      '-s', '1280x720',
+      '-y',
+      '-f', 'rawvideo',
+      '-pix_fmt', 'bgr24',
+      '-r', '30',
+      '-i', '-',
+      '-vf', 'format=yuv420p',
+      '-c:v', 'h264_v4l2m2m',
+      '-b:v', '1M',
+      '-f', 'flv',
+      '-bufsize', '256M',
+       rtmp_url
     ]
     return sp.Popen(command, stdin=sp.PIPE)
 
@@ -36,7 +35,11 @@ def face_detection(frame):
 
 def main():
     rtmp_url = "rtmp://103.165.142.44:7957/camera/kent-test"  # TODO Dynamic URL, Stream keys...
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
+    
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH ,1280);
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT ,720);
+    cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M','J','P','G'))
     cap.set(cv2.CAP_PROP_FPS, 60)
     
     # Get video information
