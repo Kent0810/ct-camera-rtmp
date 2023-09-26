@@ -40,7 +40,7 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH ,1280);
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT ,720);
     cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M','J','P','G'))
-    cap.set(cv2.CAP_PROP_FPS, 60)
+    cap.set(cv2.CAP_PROP_FPS, 30)
     
     # Get video information
     fps = int(cap.get(cv2.CAP_PROP_FPS))
