@@ -5,7 +5,7 @@ from threading import Thread
 from WebcamVideoStream import WebcamVideoStream
 
 # This is the XML location + file containing the pre-trained classifier for detecting frontal faces in images
-face_cascade = cv2.CascadeClassifier('./pretrainned-model/haarcascade_frontalface_default.xml')
+# face_cascade = cv2.CascadeClassifier('./pretrainned-model/haarcascade_frontalface_default.xml')
 
 def start_ffmpeg(rtmp_url):
     command = [
